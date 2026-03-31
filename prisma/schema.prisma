@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Question {
+  id                String   @id @default(uuid())
+  content           String
+  moderatorResponse String?
+  status            Status   @default(PENDING)
+  createdAt         DateTime @default(now())
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+}
+
+model Category {
+  id        String     @id @default(uuid())
+  name      String     @unique
+  color     String     @default("#000000")
+  iconUrl   String?
+  questions Question[]
+}
+
+enum Status {
+  PENDING
+  APPROVED
+  READ
+}
