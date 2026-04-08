@@ -1,13 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Query, Delete } from '@nestjs/common';
 import { QuestionsService } from './question.service';
+import { CreateQuestionDto } from './dto/create-question.dto';
 
 @Controller('questions')
 export class QuestionsController {
   constructor(private readonly questionsService: QuestionsService) { }
 
   @Post()
-  async ask(@Body('content') content: string) {
-    return this.questionsService.createQuestion(content);
+  async ask(@Body() createQuestionDto: CreateQuestionDto) {
+    return this.questionsService.createQuestion(createQuestionDto);
   }
 
   @Get()

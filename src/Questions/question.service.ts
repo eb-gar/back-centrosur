@@ -6,11 +6,14 @@ import { QuestionsGateway } from '../gateway/websocket.gateway';
 @Injectable()
 export class QuestionsService {
   constructor(private prisma: PrismaService, private questionsGateway: QuestionsGateway) { }
-
-  async createQuestion(content: string) {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+  async createQuestion(
+    data: { content: string; createdByModerator?: boolean },
+  ) {
     const question = await this.prisma.question.create({
       data: {
-        content,
+        content: data.content,
+        createdByModerator: data.createdByModerator ?? false,
         status: 'PENDING',
       },
     });
@@ -75,6 +78,7 @@ export class QuestionsService {
     return this.prisma.question.create({
       data: {
         content,
+        createdByModerator: true,
         category: {
           connectOrCreate: {
             where: { name: category },

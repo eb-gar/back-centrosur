@@ -15,6 +15,7 @@ model Question {
   id                String   @id @default(uuid())
   content           String
   moderatorResponse String?
+  createdByModerator Boolean  @default(false)
   status            Status   @default(PENDING)
   createdAt         DateTime @default(now())
 
