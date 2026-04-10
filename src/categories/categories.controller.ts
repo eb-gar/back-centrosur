@@ -12,7 +12,6 @@ export class CategoriesController {
 
     @Post()
     create(@Body() data: any) { return this.categoriesService.create(data); }
-
     @Patch(':id')
     update(@Param('id') id: string, @Body() data: any) {
         return this.categoriesService.update(id, data);
