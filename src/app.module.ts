@@ -9,7 +9,7 @@ import { CategoriesModule } from './categories/categories.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: 'dev.env',
+      envFilePath: ['.dev.env', 'dev.env', '.env'],
     }),
     QuestionModule,
     CategoriesModule,

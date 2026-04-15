@@ -11,7 +11,7 @@ import { Server } from 'socket.io';
 })
 export class QuestionsGateway {
   @WebSocketServer()
-  server: Server;
+  server!: Server;
 
   emitNewQuestion(question: any) {
     this.server.emit('new_question_received', question);

@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { QuestionsController } from './question.controller';
 import { QuestionsService } from './question.service';
 import { QuestionsGateway } from '../gateway/websocket.gateway';
-import { PrismaModule } from '../prisma/prisma.module';
+import { DatabaseModule } from '../database/database.module';
 
 @Module({
-    imports: [PrismaModule],
+    imports: [DatabaseModule],
     controllers: [QuestionsController],
     providers: [QuestionsService, QuestionsGateway],
     exports: [QuestionsService],

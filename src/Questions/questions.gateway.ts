@@ -10,18 +10,22 @@ import { Server, Socket } from 'socket.io';
 })
 export class QuestionsGateway implements OnGatewayConnection {
   @WebSocketServer()
-  server: Server;
+  server!: Server;
 
   handleConnection(client: Socket) {
-    const eventId = client.handshake.query.eventId as string;
-
-    if (eventId) {
-      client.join(eventId);
-      console.log(`Cliente unido al evento ${eventId}`);
-    }
+    console.log("Cliente conectado:", client.id);
   }
 
-  sendNewQuestion(question: any, eventId: string) {
-    this.server.to(eventId).emit('new-question', question);
+  emitNewQuestion(question: any) {
+    console.log("EMITIENDO SOCKET", question);
+    this.server.emit('new_question_received', question);
+  }
+
+  emitQuestionUpdated(question: any) {
+    this.server.emit('question_updated', question);
+  }
+
+  emitQuestionDeleted(id: string) {
+    this.server.emit('question_deleted', { id });
   }
 }

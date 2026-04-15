@@ -1,22 +1,40 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 
 @Controller('categories')
 export class CategoriesController {
-    constructor(private readonly categoriesService: CategoriesService) { }
+  constructor(private readonly categoriesService: CategoriesService) {}
 
-    @Get()
-    async list() {
-        return this.categoriesService.findAll();
-    }
+  @Get()
+  async list() {
+    return this.categoriesService.findAll();
+  }
 
-    @Post()
-    create(@Body() data: any) { return this.categoriesService.create(data); }
-    @Patch(':id')
-    update(@Param('id') id: string, @Body() data: any) {
-        return this.categoriesService.update(id, data);
-    }
+  @Post()
+  async create(
+    @Body() data: { name: string; color: string },
+  ) {
+    return this.categoriesService.create(data);
+  }
 
-    @Delete(':id')
-    remove(@Param('id') id: string) { return this.categoriesService.remove(id); }
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() data: { name?: string; color?: string },
+  ) {
+    return this.categoriesService.update(id, data);
+  }
+
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    return this.categoriesService.remove(id);
+  }
 }

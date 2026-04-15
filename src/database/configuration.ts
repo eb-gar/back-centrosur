@@ -1,5 +1,5 @@
 export default () => ({
-    portBackend: + process.env.PORT_BACKEND,
+    portBackend: + process.env.PORT_BACKEND!,
     database: {
       host: process.env.DATABASE_HOST,
       port: process.env.DATABASE_PORT,

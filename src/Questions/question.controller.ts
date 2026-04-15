@@ -1,10 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Query, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Query,
+  Delete,
+} from '@nestjs/common';
 import { QuestionsService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 
 @Controller('questions')
 export class QuestionsController {
-  constructor(private readonly questionsService: QuestionsService) { }
+  constructor(private readonly questionsService: QuestionsService) {}
 
   @Post()
   async ask(@Body() createQuestionDto: CreateQuestionDto) {
@@ -12,8 +21,8 @@ export class QuestionsController {
   }
 
   @Get()
-  async list(@Query('unread') unread: string) {
-    return this.questionsService.getAllQuestions(unread === 'true');
+  async list(@Query('categoryId') categoryId?: string) {
+    return this.questionsService.getFiltered(categoryId);
   }
 
   @Patch(':id')
@@ -21,9 +30,8 @@ export class QuestionsController {
     @Param('id') id: string,
     @Body()
     updateData: {
-      category?: string;
-      categoryId?: string;
-      status?: any;
+      status?: string;
+      categoryId?: string | null;
       moderatorResponse?: string | null;
     },
   ) {
